@@ -3,7 +3,7 @@
 
 #include "Euler.h"
 
-void main() {
+int main() {
 	Euler e;
 	std::clock_t start = std::clock();
 
@@ -21,7 +21,7 @@ void main() {
 	//std::cout << e.TriangleNoWithGreaterThan500Divisors() << std::endl;
 	//std::cout << e.LargeSum() << std::endl;
 	//std::cout << e.CollatzConjecture() << std::endl;
-	//std::cout << e.LatticePaths() << std::endl;
+	std::cout << e.LatticePaths() << std::endl;
 	//std::cout << e.DigitSum() << std::endl;
 	//std::cout << e.LetterCounter() << std::endl;
 	//std::cout << e.MaximumPathSum() << std::endl;
@@ -85,7 +85,7 @@ void main() {
 	//std::cout << e.PrimeSummations() << std::endl;
 	//std::cout << e.CoinPartitions() << std::endl;
 	//std::cout << e.PasscodeDerivation() << std::endl;
-	std::cout << e.SquareRootDigitalExpansion() << std::endl;
+	//std::cout << e.SquareRootDigitalExpansion() << std::endl;
 
 	std::cout << "duration: " << std::clock() - start << "ms" << std::endl;
 
