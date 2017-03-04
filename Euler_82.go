@@ -45,33 +45,67 @@ func dijkstra(matrix [][]Node) int {
             matrix[x][y + 1].distance = matrix[x][y].distance + matrix[x][y + 1].cost
           }
         }
+
+        if y - 1 >= 0 {
+          if (!matrix[x][y - 1].included) && matrix[x][y].distance != 1<<31 - 1 && matrix[x][y].distance + matrix[x][y - 1].cost < matrix[x][y - 1].distance {
+            matrix[x][y - 1].distance = matrix[x][y].distance + matrix[x][y - 1].cost
+          }
+        }
       }
     }
   }
 
-  return matrix[79][79].distance
+  min := 1<<31 - 1
+
+  for y := 0; y < 80; y++ {
+    if matrix[79][y].distance <= min {
+      min = matrix[79][y].distance
+    }
+
+    if matrix[79][y].distance == 1<<31 - 1 {
+      panic("!")
+    }
+  }
+
+  return min
 }
 
 func main() {
-  dat, _ := ioutil.ReadFile("./files/matrix_81.txt")
+  dat, _ := ioutil.ReadFile("./files/matrix_82.txt")
 
-  var matrix [][]Node
+  min :=1<<31 - 1
 
-  for _, r := range strings.Split(string(dat), "\n") {
-    var int_row []Node
+  for y := 0; y < 80; y++ {
+    var matrix [][]Node
 
-    for _, r2 := range strings.Split(r, ",") {
-      var n Node
-      cost, _ := strconv.Atoi(r2)
-      n.cost = cost
-      n.distance = 1<<31 - 1
-      n.included = false
-      int_row = append(int_row, n)
+    for _, r := range strings.Split(string(dat), "\n") {
+      var int_row []Node
+
+      for _, r2 := range strings.Split(r, ",") {
+        var n Node
+        cost, _ := strconv.Atoi(r2)
+        n.cost = cost
+        n.distance = 1<<31 - 1
+        n.included = false
+        int_row = append(int_row, n)
+      }
+
+      matrix = append(matrix, int_row)
     }
 
-    matrix = append(matrix, int_row)
+    matrix[0][y].distance = matrix[0][y].cost
+    if y > 0 {
+      fmt.Println(matrix[0][y - 1].distance)
+    }
+
+    potential_min := dijkstra(matrix)
+
+    fmt.Println(potential_min)
+
+    if potential_min <= min {
+      min = potential_min
+    }
   }
 
-  matrix[0][0].distance = matrix[0][0].cost
-  fmt.Println(dijkstra(matrix))
+  fmt.Println(min)
 }

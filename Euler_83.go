@@ -39,10 +39,21 @@ func dijkstra(matrix [][]Node) int {
           }
         }
 
-
         if y + 1 < 80 {
           if (!matrix[x][y + 1].included) && matrix[x][y].distance != 1<<31 - 1 && matrix[x][y].distance + matrix[x][y + 1].cost < matrix[x][y + 1].distance {
             matrix[x][y + 1].distance = matrix[x][y].distance + matrix[x][y + 1].cost
+          }
+        }
+
+        if x - 1 >= 0 {
+          if (!matrix[x - 1][y].included) && matrix[x][y].distance != 1<<31 - 1 && matrix[x][y].distance + matrix[x - 1][y].cost < matrix[x - 1][y].distance {
+            matrix[x - 1][y].distance = matrix[x][y].distance + matrix[x - 1][y].cost
+          }
+        }
+
+        if y - 1 >= 0 {
+          if (!matrix[x][y - 1].included) && matrix[x][y].distance != 1<<31 - 1 && matrix[x][y].distance + matrix[x][y - 1].cost < matrix[x][y - 1].distance {
+            matrix[x][y - 1].distance = matrix[x][y].distance + matrix[x][y - 1].cost
           }
         }
       }
@@ -53,7 +64,7 @@ func dijkstra(matrix [][]Node) int {
 }
 
 func main() {
-  dat, _ := ioutil.ReadFile("./files/matrix_81.txt")
+  dat, _ := ioutil.ReadFile("./files/matrix_83.txt")
 
   var matrix [][]Node
 
@@ -73,5 +84,6 @@ func main() {
   }
 
   matrix[0][0].distance = matrix[0][0].cost
+
   fmt.Println(dijkstra(matrix))
 }
