@@ -7,7 +7,6 @@ llui lpf(llui x)
     bool is_prime;
 
     llui count = 1;
-    llui my_prime = 2; //set to first prime
 
     for(llui i = 3; count < x; i += 2)
     {
@@ -21,7 +20,6 @@ llui lpf(llui x)
                 return i;
 
             ++count;
-            my_prime = i;
         }
     }
 

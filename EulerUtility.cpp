@@ -179,18 +179,12 @@ int EulerUtility::factorial(int n)
 
 bool EulerUtility::isPerfectSquare(llui n)
 {
-    if (n < 0)
-        return false;
-
     llui tst = (llui)(sqrt(n) + 0.5);
     return tst*tst == n;
 }
 
 bool EulerUtility::isPerfectCube(llui n)
 {
-    if (n < 0)
-        return false;
-
     llui tst = (llui)std::floor(std::pow(n, 1/3.) + 0.5);
     return n == tst * tst * tst;
 }
