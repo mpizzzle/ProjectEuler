@@ -7,7 +7,7 @@ int Euler::MaximumPathSum()
     std::ifstream fin;
     std::vector<std::string> str_rows;
 
-    fin.open("E:\\Euler Resources\\Euler 67.txt");
+    fin.open("files/p067_triangle.txt");
 
     std::string temp;
     while(std::getline(fin, temp))

@@ -12,7 +12,7 @@ int Euler::xorDecryption()
     std::string character;
     std::string word = " the ";
 
-    file.open("E:\\Euler Resources\\Euler 59.txt");
+    file.open("files/p059_cipher.txt");
 
     while(getline(file, character, ','))
         cypher.push_back(atoi(character.c_str()));

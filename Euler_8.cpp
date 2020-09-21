@@ -5,7 +5,7 @@
 llui Euler::FindGreatestProductOf13AdjacentDigits()
 {
     std::ifstream fin;
-    fin.open("E:\\Euler Resources\\Euler 8.txt");
+    fin.open("files/p8_digits.txt");
 
     std::string number;
 

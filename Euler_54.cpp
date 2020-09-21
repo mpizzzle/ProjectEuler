@@ -236,7 +236,7 @@ int Euler::PokerHands()
     int scores[2] = {0, 0};
 
     std::ifstream fin;
-    fin.open("E:\\Euler Resources\\Euler 54.txt");
+    fin.open("files/p054_poker.txt");
 
     for (std::string line; std::getline(fin, line);) {
         std::vector<std::string> tokens = EulerUtility::strTokenizer(line, ' ');

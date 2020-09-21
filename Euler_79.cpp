@@ -9,7 +9,7 @@ std::string Euler::PasscodeDerivation()
     std::ifstream fin;
     std::vector<std::string> numbers;
 
-    fin.open("E:\\Euler Resources\\Euler 79.txt");
+    fin.open("files/p079_keylog.txt");
 
     std::string temp;
     while(std::getline(fin, temp))
