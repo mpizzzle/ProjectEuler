@@ -164,12 +164,12 @@ std::vector<int> EulerUtility::powerDigits(int n, int p)
     return digits;
 }
 
-BigInteger EulerUtility::bigFactorial(BigInteger n) 
+/*BigInteger EulerUtility::bigFactorial(BigInteger n) 
 {
     if (n == 0)
         return 1;
     return n * bigFactorial(n - 1);
-}
+}*/
 
 int EulerUtility::factorial(int n) 
 {
@@ -178,10 +178,10 @@ int EulerUtility::factorial(int n)
     return n * factorial(n - 1);
 }
 
-BigInteger EulerUtility::choose(int n, int k)
+/*BigInteger EulerUtility::choose(int n, int k)
 {
     return EulerUtility::bigFactorial(n) / (EulerUtility::bigFactorial(k) * EulerUtility::bigFactorial(n - k));
-}
+}*/
 
 bool EulerUtility::isPerfectSquare(llui n)
 {
@@ -231,7 +231,7 @@ std::vector<int> EulerUtility::lluiToDigits(llui n)
     return digitArray;
 }
 
-std::vector<int> EulerUtility::BigIntToDigits(BigInteger n)
+/*std::vector<int> EulerUtility::BigIntToDigits(BigInteger n)
 {
     std::vector<int> digitArray;
 
@@ -244,7 +244,7 @@ std::vector<int> EulerUtility::BigIntToDigits(BigInteger n)
     std::reverse(digitArray.begin(), digitArray.end());
 
     return digitArray;
-}
+}*/
 
 int EulerUtility::digitsToInteger(std::vector<int> d)
 {
@@ -381,13 +381,13 @@ std::vector<std::string> EulerUtility::openWordFile(std::string filename)
     return names;
 }
 
-BigInteger EulerUtility::power(BigInteger i, int p)
+/*BigInteger EulerUtility::power(BigInteger i, int p)
 {
     if (p <= 0)
         return 1;
 
     return i * power(i, p - 1);
-}
+}*/
 
 int EulerUtility::digitalRoot(int n)
 {
@@ -400,7 +400,7 @@ int EulerUtility::digitalRoot(int n)
     return digitSum;
 }
 
-int EulerUtility::digitalRoot(BigInteger n)
+/*int EulerUtility::digitalRoot(BigInteger n)
 {
     std::vector<int> digits = BigIntToDigits(n);
     int digitSum = std::accumulate(digits.begin(), digits.end(), 0);
@@ -409,7 +409,7 @@ int EulerUtility::digitalRoot(BigInteger n)
         return digitalRoot(digitSum);
 
     return digitSum;
-}
+}*/
 
 std::vector<int> EulerUtility::intersect(std::vector<int>& a, std::vector<int>& b)
 {

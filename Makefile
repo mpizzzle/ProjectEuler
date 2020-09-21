@@ -15,30 +15,11 @@ euler-headers = \
     EulerUtility.h \
     Euler.h \
 
-bigint-objects = \
-    BigUnsigned.o \
-    BigInteger.o \
-    BigIntegerAlgorithms.o \
-    BigUnsignedInABase.o \
-    BigIntegerUtils.o \
+$(euler-objects): $(euler-headers)
 
-bigint-headers = \
-    NumberlikeArray.hh \
-    BigUnsigned.hh \
-    BigInteger.hh \
-    BigIntegerAlgorithms.hh \
-    BigUnsignedInABase.hh \
-    BigIntegerLibrary.hh \
-
-bigint: $(bigint-objects)
-
-$(bigint-objects): $(bigint-headers)
-
-$(euler-objects): $(euler-headers) $(bigint-headers)
-
-$(program) : $(euler-objects) $(bigint-objects)
+$(program) : $(euler-objects)
     g++ $^ -o $@
 
-clean : rm -f $(bigint-objects) $(program-objects) $(program)
+clean : rm -f $(program-objects) $(program)
 
 all: make $(program)
