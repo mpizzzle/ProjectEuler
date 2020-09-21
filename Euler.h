@@ -82,4 +82,5 @@ public:
     llui CoinPartitions();
     std::string PasscodeDerivation();
     int SquareRootDigitalExpansion();
+    uint64_t PrimePowerTriples();
 };

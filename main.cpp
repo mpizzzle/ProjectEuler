@@ -86,6 +86,7 @@ int main() {
 	//std::cout << e.CoinPartitions() << std::endl;
 	//std::cout << e.PasscodeDerivation() << std::endl;
 	//std::cout << e.SquareRootDigitalExpansion() << std::endl;
+	std::cout << e.PrimePowerTriples() << std::endl;
 
 	std::cout << "duration: " << std::clock() - start << "ms" << std::endl;
 	return 0;

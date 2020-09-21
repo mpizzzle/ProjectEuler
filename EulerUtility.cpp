@@ -59,13 +59,7 @@ std::vector<int> EulerUtility::getPrimesUnderCeiling(int ceiling)
 
 std::vector<int> EulerUtility::getPrimesUnderCeilingIndexed(int ceiling)
 {
-    std::vector<int> primes;
-
-    primes.push_back(-1);
-    primes.push_back(-1);
-    primes.push_back(2);
-    primes.push_back(3);
-    primes.push_back(-1);
+    std::vector<int> primes = { -1, -1, 2, 3, -1 };
 
     bool is_prime;
 
