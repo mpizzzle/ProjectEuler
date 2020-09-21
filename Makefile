@@ -1,6 +1,7 @@
 CXX = clang++
 CXXFLAGS = -O2 -Wall -Wextra -pedantic -std=c++17 -I.
-DEPS = Euler.h EulerUtility.h
+BOOST = /usr/include/boost
+DEPS = Euler.h EulerUtility.h $(BOOST)
 ODIR = obj
 _OBJ = main.o \
 	Euler_1.o Euler_2.o Euler_3.o Euler_4.o Euler_5.o Euler_6.o Euler_7.o Euler_8.o Euler_9.o Euler_10.o \
@@ -10,7 +11,7 @@ _OBJ = main.o \
 	Euler_41.o Euler_42.o Euler_44.o Euler_45.o Euler_46.o Euler_47.o Euler_49.o Euler_50.o \
 	Euler_51.o Euler_52.o Euler_54.o Euler_56.o Euler_58.o Euler_59.o Euler_60.o \
 	Euler_61.o Euler_62.o Euler_64.o Euler_68.o Euler_69.o Euler_70.o \
-	Euler_71.o Euler_72.o Euler_73.o Euler_74.o Euler_75.o Euler_76.o Euler_77.o Euler_79.o \
+	Euler_71.o Euler_72.o Euler_73.o Euler_74.o Euler_75.o Euler_76.o Euler_77.o Euler_79.o Euler_80.o \
 	Euler_87.o \
 	EulerUtility.o
 
@@ -20,7 +21,7 @@ $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 euler: $(OBJ)
-	$(CXX) -o $@ $^ -I .
+	$(CXX) -o $@ $^ $(CXXFLAGS)
 
 clean:
 	rm -f $(ODIR)/*.o
