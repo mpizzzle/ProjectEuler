@@ -4,7 +4,7 @@ int Euler::PowerfulDigitCounts()
 {
     int count = 0;
 
-    for (BigInteger i = 1; i < 10; ++i)
+    for (cpp_int i = 1; i < 10; ++i)
     {
         for (int p = 1;; ++p)
         {

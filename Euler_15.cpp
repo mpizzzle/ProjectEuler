@@ -1,6 +1,6 @@
 #include "Euler.h"
 
-BigInteger Euler::LatticePaths()
+cpp_int Euler::LatticePaths()
 {
     return EulerUtility::choose(40,20);
 }

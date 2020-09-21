@@ -1,8 +1,8 @@
 #include "Euler.h"
 
-BigInteger partition(BigInteger &n, std::vector<BigInteger> &cache)
+cpp_int partition(cpp_int &n, std::vector<cpp_int> &cache)
 {
-    BigInteger p = 0;
+    cpp_int p = 0;
 
     if (n >= 0)
     {
@@ -17,15 +17,15 @@ BigInteger partition(BigInteger &n, std::vector<BigInteger> &cache)
 
         int k = 1;
 
-        BigInteger s1 = 0;
-        BigInteger s2 = 0;
+        cpp_int s1 = 0;
+        cpp_int s2 = 0;
 
         while (n - s2 >= 0)
         {
             s1 = (k * (3 * k - 1)) / 2;
             s2 = (k * (3 * k + 1)) / 2;
 
-            BigInteger sign = (k - 1) & 1 ? -1 : 1;
+            cpp_int sign = (k - 1) & 1 ? -1 : 1;
 
             p += sign * partition(n - s1, cache);
             p += sign * partition(n - s2, cache);
@@ -41,13 +41,13 @@ BigInteger partition(BigInteger &n, std::vector<BigInteger> &cache)
 llui Euler::CoinPartitions()
 {
     int ceiling = 100000;
-    std::vector<BigInteger> cache(ceiling, 0);
+    std::vector<cpp_int> cache(ceiling, 0);
 
     for (int i = 1; i < ceiling; ++i)
     {
         if ((i - 4) % 5 == 0)
         {
-            BigInteger n = partition(BigInteger(i), cache);
+            cpp_int n = partition(cpp_int(i), cache);
 
             if (n % 1000000 == 0)
             {

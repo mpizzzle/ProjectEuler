@@ -2,7 +2,7 @@
 
 #include "Euler.h"
 
-bool isPalindrome(BigInteger i)
+bool isPalindrome(cpp_int i)
 {
     std::ostringstream oss;
     oss << i;
@@ -16,9 +16,9 @@ bool isPalindrome(BigInteger i)
     return true;
 }
 
-BigInteger reverse(BigInteger i)
+cpp_int reverse(cpp_int i)
 {
-    BigInteger reverse = 0;
+    cpp_int reverse = 0;
 
     while(i > 0)
     {
@@ -29,13 +29,13 @@ BigInteger reverse(BigInteger i)
     return reverse;
 }
 
-BigInteger Euler::LychrelNumbers()
+cpp_int Euler::LychrelNumbers()
 {
     int lychel = 9999;
 
     for (int i = 1; i < 10000; ++i)
     {
-        BigInteger current(i);
+        cpp_int current(i);
 
         for (int j = 0; j < 50; ++j)
         {

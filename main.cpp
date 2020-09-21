@@ -21,8 +21,7 @@ int main() {
 	std::cout << e.TriangleNoWithGreaterThan500Divisors() << std::endl;
 	std::cout << e.LargeSum() << std::endl;
 	std::cout << e.CollatzConjecture() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.LatticePaths() << std::endl;
+	std::cout << e.LatticePaths() << std::endl;
 	std::cout << e.DigitSum() << std::endl;
 	std::cout << e.LetterCounter() << std::endl;
 	std::cout << e.MaximumPathSum() << std::endl;
@@ -33,8 +32,7 @@ int main() {
 	std::cout << e.NonAbundantSums() << std::endl;
 	std::cout << e.LexicographicPermutations() << std::endl;
 	std::cout << e.ThousandDigitFibonacciNumber() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.ReciprocalCycles() << std::endl;
+	std::cout << e.ReciprocalCycles() << std::endl;
 	std::cout << e.QuadraticPrimes() << std::endl;
 	std::cout << e.SpiralDiagonals() << std::endl;
 	std::cout << e.DistinctPowers() << std::endl;
@@ -51,33 +49,27 @@ int main() {
 	std::cout << e.ChampernowneConstant() << std::endl;
 	std::cout << e.PanDigitalPrime() << std::endl;
 	std::cout << e.CodedTriangleNumbers() << std::endl; //wrong
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.SubStringDivisibility() << std::endl;
+	std::cout << e.SubStringDivisibility() << std::endl;
 	std::cout << e.MinimizedPentagonalDifference() << std::endl;
 	std::cout << e.TriangularPentagonalHexagonal() << std::endl;
 	std::cout << e.GoldbachsOtherConjecture() << std::endl;
 	std::cout << e.DistinctPrimeFactors() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.SelfPowers() << std::endl;
+	std::cout << e.SelfPowers() << std::endl;
 	std::cout << e.PrimePermutations() << std::endl;
 	std::cout << e.ConsecutivePrimeSum() << std::endl;
 	std::cout << e.PrimeDigitReplacements() << std::endl;
 	std::cout << e.PermutedMultiples() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.CombinatoricSelections() << std::endl;
+	std::cout << e.CombinatoricSelections() << std::endl;
 	std::cout << e.PokerHands() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.LychrelNumbers() << std::endl;
+	std::cout << e.LychrelNumbers() << std::endl;
 	std::cout << e.PowerfulDigitSum() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.SquareRootConvergents() << std::endl;
+	std::cout << e.SquareRootConvergents() << std::endl;
 	std::cout << e.SpiralPrimes() << std::endl;
 	std::cout << e.xorDecryption() << std::endl; //wrong
 	std::cout << e.PrimePairSets() << std::endl;
 	std::cout << e.CyclicFigurateNumbers() << std::endl;
 	std::cout << e.CubicPermutations() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.PowerfulDigitCounts() << std::endl;
+	std::cout << e.PowerfulDigitCounts() << std::endl;
 	std::cout << e.OddPeriodSquareRoots() << std::endl;
 	std::cout << "(skipped)" << std::endl;
 	//std::cout << e.ConvergentsOfE() << std::endl;
@@ -91,13 +83,11 @@ int main() {
 	std::cout << e.CountingRangedFractions() << std::endl;
 	std::cout << e.DigitFactorialChains() << std::endl;
 	std::cout << e.UniquePerimeterRightAngledTriangles() << std::endl;
-	std::cout << "(skipped)" << std::endl;
-	//std::cout << e.CountingSums() << std::endl;
+	std::cout << e.CountingSums() << std::endl;
 	std::cout << e.PrimeSummations() << std::endl;
 	std::cout << "(skipped)" << std::endl;
 	//std::cout << e.CoinPartitions() << std::endl;
 	std::cout << e.PasscodeDerivation() << std::endl; //wrong
-	std::cout << "(skipped)" << std::endl;
 	std::cout << e.SquareRootDigitalExpansion() << std::endl;
 	std::cout << e.PrimePowerTriples() << std::endl;
 

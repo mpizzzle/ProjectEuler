@@ -10,7 +10,7 @@ int Euler::ReciprocalCycles()
 
         for (int i = 1; i < primes[j]; ++i)
         {
-            BigInteger bi = EulerUtility::power(10, i);
+            cpp_int bi = EulerUtility::power(10, i);
 
             if (((bi % primes[j] == 1) && (i != (primes[j] - 1))) || ((bi % primes[j] != 1) && (i == (primes[j] - 1))))
             {

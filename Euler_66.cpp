@@ -1,11 +1,11 @@
 #include "Euler.h"
 
-bool valueOfDiophantine(BigInteger x, BigInteger y, BigInteger n)
+bool valueOfDiophantine(cpp_int x, cpp_int y, cpp_int n)
 {
-    return EulerUtility::power(x, 2) - (n * EulerUtility::power(y, 2)) == BigInteger(1);
+    return EulerUtility::power(x, 2) - (n * EulerUtility::power(y, 2)) == cpp_int(1);
 }
 
-std::vector<BigInteger> recurseFraction(std::vector<BigInteger> period, BigInteger n, std::vector<BigInteger> fraction)
+std::vector<cpp_int> recurseFraction(std::vector<cpp_int> period, cpp_int n, std::vector<cpp_int> fraction)
 {
     if (n > period.size() - 1)
         return fraction;
@@ -17,9 +17,9 @@ std::vector<BigInteger> recurseFraction(std::vector<BigInteger> period, BigInteg
     return recurseFraction(period, n + 1, fraction);
 }
 
-std::vector<BigInteger> recurseFraction(std::vector<BigInteger> period, BigInteger n)
+std::vector<cpp_int> recurseFraction(std::vector<cpp_int> period, cpp_int n)
 {
-    std::vector<BigInteger> fraction;
+    std::vector<cpp_int> fraction;
 
     fraction.push_back(period[period.size() - 1]);
     fraction.push_back(1);
@@ -27,13 +27,13 @@ std::vector<BigInteger> recurseFraction(std::vector<BigInteger> period, BigInteg
     return recurseFraction(period, 1, fraction);
 }
 
-BigInteger valueOfX(BigInteger n)
+cpp_int valueOfX(cpp_int n)
 {
     double n2 = std::sqrtl(n.toInt());
-    BigInteger a = (int)n2, p = 0, q = 1;
+    cpp_int a = (int)n2, p = 0, q = 1;
 
-    std::vector<BigInteger> period;
-    std::vector<BigInteger> approx;
+    std::vector<cpp_int> period;
+    std::vector<cpp_int> approx;
 
     period.push_back(a);
 
@@ -53,14 +53,14 @@ BigInteger valueOfX(BigInteger n)
 
 int Euler::Diophantine()
 {
-    BigInteger currentMax = 0;
+    cpp_int currentMax = 0;
     int valueOfD = 0;
 
     for (int i = 2; i <= 1000; ++i)
     {
         if (!EulerUtility::isPerfectSquare(i))
         {
-            BigInteger x = valueOfX(i);
+            cpp_int x = valueOfX(i);
 
             if (x > currentMax)
             {

@@ -31,7 +31,7 @@ void findDivisiblePermutations(std::vector<llui> &dps, std::vector<std::vector<s
                 dps[i] = EulerUtility::digitsTollui(std::to_string(j) + std::to_string(dps[i]));
 }
 
-BigInteger Euler::SubStringDivisibility()
+cpp_int Euler::SubStringDivisibility()
 {
     std::vector<int> primes = EulerUtility::getPrimesUnderCeiling(18);
     std::vector<std::vector<std::string>> potentialSubLex(7, std::vector<std::string>());
@@ -44,7 +44,7 @@ BigInteger Euler::SubStringDivisibility()
 
     findDivisiblePermutations(divisiblePermutations, potentialSubLex, 6);
 
-    BigInteger i = 0;
+    cpp_int i = 0;
 
     for (uint64_t ul : divisiblePermutations)
         i += ul;

@@ -2,7 +2,7 @@
 
 int Euler::SquareRootConvergents()
 {
-    BigInteger n = 3, d = 2;
+    cpp_int n = 3, d = 2;
     int count = 0;
 
     for (int i = 1; i < 1000; ++i)

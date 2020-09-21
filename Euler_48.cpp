@@ -1,8 +1,8 @@
 #include "Euler.h"
 
-BigInteger Euler::SelfPowers()
+cpp_int Euler::SelfPowers()
 {
-    BigInteger i;
+    cpp_int i;
 
     for (int j = 1; j <= 1000; ++j)
         i += EulerUtility::power(j, j);
