@@ -6,7 +6,7 @@ int Euler::PowerfulDigitCounts()
 
     for (cpp_int i = 1; i < 10; ++i)
     {
-        for (int p = 1;; ++p)
+        for (uint64_t p = 1;; ++p)
         {
             if (EulerUtility::BigIntToDigits(EulerUtility::power(i, p)).size() == p)
             {
