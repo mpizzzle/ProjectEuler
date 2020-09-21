@@ -14,7 +14,7 @@ int Euler::MinimizedPentagonalDifference()
     {
         pentaNos.push_back(getPentagonal(pentaNos.size() + 1));
 
-        for (int j = 0; j < pentaNos.size() - 1; ++j)
+        for (uint64_t j = 0; j < pentaNos.size() - 1; ++j)
             if (EulerUtility::isPentagonal(pentaNos[pentaNos.size() - 1] + pentaNos[j]) && EulerUtility::isPentagonal(pentaNos[pentaNos.size() - 1] - pentaNos[j]))
                 return pentaNos[pentaNos.size() - 1] - pentaNos[j];
     }

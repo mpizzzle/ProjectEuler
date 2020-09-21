@@ -1,3 +1,5 @@
+#include <cstdint>
+
 #include "Euler.h"
 
 int Euler::CombinatoricSelections()

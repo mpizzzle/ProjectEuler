@@ -4,7 +4,7 @@
 
 int Euler::UniquePerimeterRightAngledTriangles()
 {
-    int ceiling = 1500000;
+    llui ceiling = 1500000;
     double sqrtCeiling = sqrt(ceiling);
     std::vector<int> perimeters(ceiling + 1, 0);
 

@@ -1,10 +1,13 @@
+#include <algorithm>
+#include <cstdint>
+
 #include "Euler.h"
 
 int primeSumRecurse(int n, int max, std::vector<int> &primes)
 {
     int sum = 0;
 
-    for(int i = max; i < primes.size(); i++)
+    for(uint64_t i = max; i < primes.size(); i++)
     {
         if (n - primes[i] == 0)
             ++sum;

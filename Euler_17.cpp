@@ -10,7 +10,7 @@ int tenz(int ten, int j, int k)
     return (j == 1) ? ((k == 0) ? ten : 0) : ten;
 }
 
-int and(int count)
+int _and(int count)
 {
     return ((count >= 100) && (count % 100 != 0)) ? std::string("and").length() : 0;
 }
@@ -31,7 +31,7 @@ int Euler::LetterCounter()
     for (int i = 0; i < 10; ++i)
         for (int j = 0; j < 10; ++j)
             for (int k = 0; k < 10; ++k)
-                sum += x_hundred(digits, i) + and(i * 100 + j * 10 + k) + tenz(tens[j].length(), j, k) + digit(digits, teens, j, k);
+                sum += x_hundred(digits, i) + _and(i * 100 + j * 10 + k) + tenz(tens[j].length(), j, k) + digit(digits, teens, j, k);
 
     return sum;
 }

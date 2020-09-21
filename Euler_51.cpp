@@ -20,7 +20,7 @@ int Euler::PrimeDigitReplacements()
 
             int repeatedDigits[3] = {0, 0, 0};
 
-            for (int i = 0; i < digits.size() - 1; ++i)
+            for (uint64_t i = 0; i < digits.size() - 1; ++i)
                 if (digits[i] <= 2)
                     ++repeatedDigits[digits[i]];
 
@@ -41,7 +41,7 @@ int Euler::PrimeDigitReplacements()
         std::vector<int> indices;
         int sizeOfFamily = 1;
 
-        for (int i = 0; i < digits.size() - 1; ++i)
+        for (uint64_t i = 0; i < digits.size() - 1; ++i)
             if (digits[i] == p.digit)
                 indices.push_back(i);
 

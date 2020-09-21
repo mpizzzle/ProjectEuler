@@ -3,6 +3,7 @@
 ll partition(int n, std::vector<int> &cache)
 {
     ll p = 0;
+    std::vector<int> cache_ref = cache;
 
     if(n >= 0)
     {
@@ -10,9 +11,9 @@ ll partition(int n, std::vector<int> &cache)
         {
             return 1;
         }
-        if(cache[n - 1] != 0)
+        if(cache_ref[n - 1] != 0)
         {
-            return cache[n - 1];
+            return cache_ref[n - 1];
         }
 
         int k = 1;
@@ -27,12 +28,12 @@ ll partition(int n, std::vector<int> &cache)
 
             int sign = (k - 1) & 1 ? -1 : 1;
 
-            p += sign * partition(n - s1, cache);
-            p += sign * partition(n - s2, cache);
+            p += sign * partition(n - s1, cache_ref);
+            p += sign * partition(n - s2, cache_ref);
             ++k;
         }
 
-        cache[n - 1] = p;
+        cache_ref[n - 1] = p;
     }
 
     return p;
@@ -40,5 +41,6 @@ ll partition(int n, std::vector<int> &cache)
 
 int Euler::CountingSums()
 {
-    return partition(100, std::vector<int>(100, 0)) - 1;
+    std::vector<int> cache(100, 0);
+    return partition(100, cache) - 1;
 }

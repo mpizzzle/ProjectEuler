@@ -2,8 +2,6 @@
 
 llui Euler::SumOfPrimesUnder2m()
 {
-    int noOfPrimes = 0;
-
     bool is_prime;
 
     llui count = 2; //includes 2 & 3

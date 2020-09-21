@@ -46,7 +46,7 @@ BigInteger Euler::SubStringDivisibility()
 
     BigInteger i = 0;
 
-    for (unsigned long ul : divisiblePermutations)
+    for (uint64_t ul : divisiblePermutations)
         i += ul;
 
     return i;

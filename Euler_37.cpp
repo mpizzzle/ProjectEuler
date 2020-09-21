@@ -7,7 +7,8 @@ bool isTruncPrime(std::string &p, std::vector<int> &primes, bool left)
     if (p.size() == 1)
         return isPrime;
 
-    return (isPrime) ? isTruncPrime(p.substr(left, p.size() - 1), primes, left) : false;
+    std::string p_substr = p.substr(left, p.size() - 1);
+    return (isPrime) ? isTruncPrime(p_substr, primes, left) : false;
 }
 
 llui Euler::TruncatablePrimes()

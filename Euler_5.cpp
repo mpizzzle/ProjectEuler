@@ -19,7 +19,7 @@ void addNewPrimeFactors(int nextDivisor, std::vector<int> &p_factors, std::vecto
             ++i;
     }
 
-    for (int j = 0; j < myPrimeFactors.size(); ++j)
+    for (uint64_t j = 0; j < myPrimeFactors.size(); ++j)
         if (p_factors[j] < myPrimeFactors[j])
             p_factors[j] = myPrimeFactors[j];
 }
@@ -34,7 +34,7 @@ int Euler::DivisibleBy1To20()
     for (int i = 2; i <= ceiling; ++i)
         addNewPrimeFactors(i, noOfPrimeFactors, primes);
 
-    for (int i = 0; i < noOfPrimeFactors.size(); ++i)
+    for (uint64_t i = 0; i < noOfPrimeFactors.size(); ++i)
         for (int j = 0; j < noOfPrimeFactors[i]; ++j)
             primeFactors.push_back(primes[i]);
 

@@ -3,7 +3,7 @@
 
 #include "Euler.h"
 
-int recurseChain(llui head, std::set<llui> &chain, int factorials[], int size)
+int recurseChain(llui head, std::set<llui> &chain, int factorials[], uint64_t size)
 {    
     llui tempHead = head;
     llui newHead = 0;
@@ -41,7 +41,7 @@ int Euler::DigitFactorialChains()
 
     std::vector<std::vector<int>> solutions;
 
-    for (int i = 1; i < 1e6; ++i)
+    for (uint64_t i = 1; i < 1e6; ++i)
     {
         bool ordered = true;
     

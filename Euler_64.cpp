@@ -49,7 +49,7 @@
 
 int period(int n)
 {
-    double n2 = std::sqrtl(n);
+    double n2 = sqrtl(n);
     int a = n2, p = 0, q = 1, length = 0;
 
     do

@@ -2,8 +2,6 @@
 
 int Euler::Get10001stPrime()
 {
-    int noOfPrimes = 0;
-
     bool is_prime;
 
     int count = 2; //includes 2 & 3

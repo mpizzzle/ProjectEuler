@@ -461,7 +461,7 @@ llui EulerUtility::phi(int n, std::vector<int> &primes, std::vector<int> &primes
         return n - 1;
 
     // Even number?
-    if (n & 1 == 0)
+    if ((n & 1) == 0)
     {
         int m = n >> 1;
         return !(m & 1) ? EulerUtility::phi(m, primes, primesIndexed) << 1 : EulerUtility::phi(m, primes, primesIndexed);
@@ -478,4 +478,6 @@ llui EulerUtility::phi(int n, std::vector<int> &primes, std::vector<int> &primes
         int d = EulerUtility::gcd(m, o);
         return (d == 1) ? EulerUtility::phi(m, primes, primesIndexed) * EulerUtility::phi(o, primes, primesIndexed) : EulerUtility::phi(m, primes, primesIndexed) * EulerUtility::phi(o, primes, primesIndexed) * d / EulerUtility::phi(d, primes, primesIndexed);
     }
+
+    return 0;
 }
