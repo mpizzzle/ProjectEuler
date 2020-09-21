@@ -4,49 +4,49 @@
 
 llui lpf(llui x)
 {
-	bool is_prime;
+    bool is_prime;
 
-	llui count = 1;
-	llui my_prime = 2; //set to first prime
+    llui count = 1;
+    llui my_prime = 2; //set to first prime
 
-	for(llui i = 3; count < x; i += 2)
-	{
-		is_prime = true;
+    for(llui i = 3; count < x; i += 2)
+    {
+        is_prime = true;
 
-		for(llui j = 3; j * j <= i && is_prime; j += 2)
-			if(i % j == 0) is_prime = false;
+        for(llui j = 3; j * j <= i && is_prime; j += 2)
+            if(i % j == 0) is_prime = false;
 
-		if(is_prime) {
-			if (x % i == 0)
-				return i;
+        if(is_prime) {
+            if (x % i == 0)
+                return i;
 
-			++count;
-			my_prime = i;
-		}
-	}
+            ++count;
+            my_prime = i;
+        }
+    }
 
-	return 0; //prime factor does not exist (1 does not count as prime)
+    return 0; //prime factor does not exist (1 does not count as prime)
 }
 
 llui Euler::LargestPrimeFactor()
 {
-	std::vector<llui> primes;
+    std::vector<llui> primes;
 
-	primes.push_back(1);
+    primes.push_back(1);
 
-	llui x = 600851475143;
+    llui x = 600851475143;
 
-	while (x > 1)
-	{
-		x /= primes.back();
+    while (x > 1)
+    {
+        x /= primes.back();
 
-		llui y = lpf(x);
+        llui y = lpf(x);
 
-		if (y != 0)
-			primes.push_back(y);
-	}
+        if (y != 0)
+            primes.push_back(y);
+    }
 
-	std::sort (primes.begin(), primes.end());
+    std::sort (primes.begin(), primes.end());
 
-	return primes.back();
+    return primes.back();
 }

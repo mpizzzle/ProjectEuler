@@ -4,30 +4,30 @@
 
 llui Euler::FindGreatestProductOf13AdjacentDigits()
 {
-	std::ifstream fin;
-	fin.open("E:\\Euler Resources\\Euler 8.txt");
+    std::ifstream fin;
+    fin.open("E:\\Euler Resources\\Euler 8.txt");
 
-	std::string number;
+    std::string number;
 
-	std::getline(fin, number);
+    std::getline(fin, number);
 
-	fin.close();
+    fin.close();
 
-	llui greatestProduct = 0;
+    llui greatestProduct = 0;
 
-	for (unsigned i = 0; i < number.length() - 13; ++i)
-	{
-		std::vector<int> digits;
+    for (unsigned i = 0; i < number.length() - 13; ++i)
+    {
+        std::vector<int> digits;
 
-		llui temp = 1;
+        llui temp = 1;
 
-		for (unsigned j = i; j < i + 13; ++j)
-			temp *= (number.at(j) - 48);
+        for (unsigned j = i; j < i + 13; ++j)
+            temp *= (number.at(j) - 48);
 
-		if (temp > greatestProduct) {
-			greatestProduct = temp;
-		}
-	}
+        if (temp > greatestProduct) {
+            greatestProduct = temp;
+        }
+    }
 
-	return greatestProduct;
+    return greatestProduct;
 }

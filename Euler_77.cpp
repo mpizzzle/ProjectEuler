@@ -7,9 +7,9 @@ int primeSumRecurse(int n, int max, std::vector<int> &primes)
     for(int i = max; i < primes.size(); i++)
     {
         if (n - primes[i] == 0)
-			++sum;
+            ++sum;
         if (n - primes[i] > 0)
-			sum += primeSumRecurse(n - primes[i], i, primes);
+            sum += primeSumRecurse(n - primes[i], i, primes);
     }
 
     return sum;     
@@ -17,18 +17,18 @@ int primeSumRecurse(int n, int max, std::vector<int> &primes)
 
 int Euler::PrimeSummations()
 {
-	int ceiling = 1000;
-	std::vector<int> primes = EulerUtility::getPrimesUnderCeiling(ceiling);
-	std::reverse(primes.begin(), primes.end());
+    int ceiling = 1000;
+    std::vector<int> primes = EulerUtility::getPrimesUnderCeiling(ceiling);
+    std::reverse(primes.begin(), primes.end());
 
-	int n = 0;
-	int i = -1;
+    int n = 0;
+    int i = -1;
 
-	while (n <= 5000)
-	{
-		++i;
-		n = primeSumRecurse(i, 0, primes);
-	}
+    while (n <= 5000)
+    {
+        ++i;
+        n = primeSumRecurse(i, 0, primes);
+    }
 
-	return i;
+    return i;
 }

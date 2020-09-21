@@ -2,5 +2,5 @@
 
 BigInteger Euler::LatticePaths()
 {
-	return EulerUtility::choose(40,20);
+    return EulerUtility::choose(40,20);
 }

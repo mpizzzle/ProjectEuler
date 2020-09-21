@@ -4,50 +4,50 @@
 
 bool isPalindrome(BigInteger i)
 {
-	std::ostringstream oss;
-	oss << i;
+    std::ostringstream oss;
+    oss << i;
 
-	std::string temp = oss.str();
+    std::string temp = oss.str();
 
-	for (unsigned int j = 0; j < temp.length() / 2 + 1; ++j)
-		if (temp.at(j) != temp.at(temp.length() - 1 - j))
-			return false;
+    for (unsigned int j = 0; j < temp.length() / 2 + 1; ++j)
+        if (temp.at(j) != temp.at(temp.length() - 1 - j))
+            return false;
 
-	return true;
+    return true;
 }
 
 BigInteger reverse(BigInteger i)
 {
-	BigInteger reverse = 0;
+    BigInteger reverse = 0;
 
-	while(i > 0)
-	{
-		reverse = reverse * 10 + (i % 10);
-		i /= 10;
-	}
+    while(i > 0)
+    {
+        reverse = reverse * 10 + (i % 10);
+        i /= 10;
+    }
 
-	return reverse;
+    return reverse;
 }
 
 BigInteger Euler::LychrelNumbers()
 {
-	int lychel = 9999;
+    int lychel = 9999;
 
-	for (int i = 1; i < 10000; ++i)
-	{
-		BigInteger current(i);
+    for (int i = 1; i < 10000; ++i)
+    {
+        BigInteger current(i);
 
-		for (int j = 0; j < 50; ++j)
-		{
-			current = current + reverse(current);
+        for (int j = 0; j < 50; ++j)
+        {
+            current = current + reverse(current);
 
-			if (isPalindrome(current))
-			{
-				--lychel;
-				break;
-			}
-		}
-	}
+            if (isPalindrome(current))
+            {
+                --lychel;
+                break;
+            }
+        }
+    }
 
-	return lychel;
+    return lychel;
 }

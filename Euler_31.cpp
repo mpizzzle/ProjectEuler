@@ -7,14 +7,14 @@ int coinSumRecurse(int money, int maxcoin)
     int sum = 0;
 
     if(maxcoin == 7)
-		return 1;
+        return 1;
 
     for(int i = maxcoin; i < 8; i++)
     {
         if (money - coins[i] == 0)
-			++sum;
+            ++sum;
         if (money - coins[i] > 0)
-			sum += coinSumRecurse(money - coins[i], i);
+            sum += coinSumRecurse(money - coins[i], i);
     }
 
     return sum;     
@@ -27,17 +27,17 @@ int Euler::CoinSums()
 
 //int Euler::CoinSums() //original solution
 //{
-//	int sum = 0;
+//    int sum = 0;
 //
-//	for (int a = 0; a <= 200; ++a)
-//		for (int b = 0; b <= 100; ++b)
-//			for (int c = 0; c <= 40; ++c)
-//				for (int d = 0; d <= 20; ++d)
-//					for (int e = 0; e <= 10; ++e)
-//						for (int f = 0; f <= 5; ++f)
-//							for (int g = 0; g <= 2; ++g)
-//								if (a + b * 2 + c * 5 + d * 10 + e * 20 + f * 50 + g * 100 == 200)
-//									++sum;
+//    for (int a = 0; a <= 200; ++a)
+//        for (int b = 0; b <= 100; ++b)
+//            for (int c = 0; c <= 40; ++c)
+//                for (int d = 0; d <= 20; ++d)
+//                    for (int e = 0; e <= 10; ++e)
+//                        for (int f = 0; f <= 5; ++f)
+//                            for (int g = 0; g <= 2; ++g)
+//                                if (a + b * 2 + c * 5 + d * 10 + e * 20 + f * 50 + g * 100 == 200)
+//                                    ++sum;
 //
-//	return sum + 1;
+//    return sum + 1;
 //}

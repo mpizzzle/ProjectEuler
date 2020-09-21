@@ -16,39 +16,39 @@
 
 llui Euler::CountingRangedFractions()
 {
-	llui count = 0;
-	bool counting = false;
+    llui count = 0;
+    bool counting = false;
 
-	int n = 12000;
-	int a = 0;
-	int b = 1;
-	int c = 1;
-	int d = n;
-	int x = 0;
+    int n = 12000;
+    int a = 0;
+    int b = 1;
+    int c = 1;
+    int d = n;
+    int x = 0;
 
-	while (c <= n && !(a == 1 && b == 2))
-	{
-		int k = 0;
+    while (c <= n && !(a == 1 && b == 2))
+    {
+        int k = 0;
 
-		if (d != 0)
-			k = int((n + b)/d);
-		else
-			++x;
+        if (d != 0)
+            k = int((n + b)/d);
+        else
+            ++x;
 
-		int temp_a = a;
-		int temp_b = b;
+        int temp_a = a;
+        int temp_b = b;
 
-		a = c;
-		b = d;
-		c = k * c - temp_a;
-		d = k * d - temp_b;
+        a = c;
+        b = d;
+        c = k * c - temp_a;
+        d = k * d - temp_b;
 
-		if (counting)
-			++count;
+        if (counting)
+            ++count;
 
-		if (a == 1 && b == 3)
-			counting = true;
-	}
+        if (a == 1 && b == 3)
+            counting = true;
+    }
 
-	return count - 1;
+    return count - 1;
 }
