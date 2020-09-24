@@ -88,8 +88,10 @@ int main() {
     //std::cout << "problem 78: " << "(skipped)" << std::endl; //<< e.CoinPartitions() << std::endl;
     //std::cout << "problem 79: " << e.PasscodeDerivation() << std::endl; //wrong
     //std::cout << "problem 80: " << e.SquareRootDigitalExpansion() << std::endl;
-    std::cout << "problem 86: " << e.CuboidRoute() << std::endl;
+    //std::cout << "problem 86: " << e.CuboidRoute() << std::endl;
     //std::cout << "problem 87: " << e.PrimePowerTriples() << std::endl;
+    //std::cout << "problem 94: " << e.AlmostEquilateralTriangles() << std::endl;
+    std::cout << "problem 95: " << e.AmicableChains() << std::endl;
 
     std::cout << "duration: " << 1000.0 * (std::clock() - start) / CLOCKS_PER_SEC << "ms" << std::endl;
     return 0;

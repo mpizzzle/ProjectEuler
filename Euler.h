@@ -84,4 +84,6 @@ public:
     int SquareRootDigitalExpansion();
     uint64_t PrimePowerTriples();
     uint64_t CuboidRoute();
+    uint64_t AlmostEquilateralTriangles();
+    int AmicableChains();
 };

@@ -1,5 +1,7 @@
 #include "Euler.h"
 
+//this can be sped up significantly by not recalculating previously found solutions but cba tbh fam
+//precalculating all the squares might also be worth it, but would be a minor optimisation compared to above
 uint64_t Euler::CuboidRoute()
 {
     for (int M = 100;; ++M) { 
