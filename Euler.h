@@ -83,4 +83,5 @@ public:
     std::string PasscodeDerivation();
     int SquareRootDigitalExpansion();
     uint64_t PrimePowerTriples();
+    uint64_t CuboidRoute();
 };
