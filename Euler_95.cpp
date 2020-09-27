@@ -17,14 +17,14 @@ int sumProperDivisors(int n)
 
 int Euler::AmicableChains()
 {
-    int one_million = 200000;
+    int one_million = 100000;
     int longest = 0;
     int solution = 0;
-    std::vector<int> divisors(one_million + 1, 0);
+    std::vector<int> cache(one_million + 1, 0);
 
-    for (int n = 0; n <= one_million; ++n) {
-	std::cout << n << std::endl;
-        divisors[n] = sumProperDivisors(n);
+    for (int i = 0; i <= one_million; ++i) {
+        cache[i] = sumProperDivisors(i);
+        std::cout << i << std::endl;
     }
 
     std::cout << std::endl << "precalc done." << std::endl;
@@ -37,50 +37,55 @@ int Euler::AmicableChains()
         std::cout << n << ": ";
 
         while(true) {
-            length += 1;
-
             if (fast_ptr <= 1 || slow_ptr > one_million || fast_ptr > one_million) {
                 std::cout << "no bueno." << std::endl;
                 break;
             }
 
-            fast_ptr = divisors[fast_ptr];
+            fast_ptr = cache[fast_ptr];
 
-            if (slow_ptr < candidate) {
-                candidate = slow_ptr;
-            }
-
-            if (slow_ptr == fast_ptr) {
-                if (length > longest) {
-                    solution = candidate;
-                    longest = length;
-                    std::cout << "chicken dinner!" << std::endl;
-                    std::cout << "current solution: " << solution << std::endl;
-
-                    int blerp = n;
-                    int fast_blerp = divisors[n];
-
-                    std::cout << n << " -> ";// << std::endl;
-                    while (blerp != fast_blerp) {
-                        blerp = divisors[blerp];
-                        fast_blerp = divisors[divisors[fast_blerp]];
-                        std::cout << blerp << " -> ";// << std::endl;
-                    }
-
-                    std::cout << std::endl << "current length: " << length << std::endl;
-                }
-                else {
-                    std::cout << "not a winner." << std::endl;
-                }
-
-		divisors[solution] = 1;
+            if (fast_ptr <= 1 || fast_ptr > one_million) {
+                std::cout << "no bueno." << std::endl;
                 break;
             }
 
-            slow_ptr = divisors[slow_ptr];
-            fast_ptr = divisors[fast_ptr];
+            if (slow_ptr == fast_ptr) {
+                while (true) {
+                    std::cout << slow_ptr << " -> ";
+                    length++;
+                    fast_ptr = cache[fast_ptr];
+
+                    if (slow_ptr < candidate) {
+                        candidate = slow_ptr;
+                    }
+
+                    if (slow_ptr == fast_ptr) {
+                        if (length > longest) {
+                            solution = candidate;
+                            longest = length;
+                            std::cout << "chicken dinner!" << std::endl;
+                            std::cout << "current solution: " << solution << std::endl;
+                            std::cout << std::endl << "current length: " << length << std::endl;
+                        }
+                        else {
+                            std::cout << "not a winner." << std::endl;
+                        }
+
+                        cache[solution] = 0;
+                        break;
+                    }
+
+                    slow_ptr = cache[slow_ptr];
+                    fast_ptr = cache[fast_ptr];
+                }
+
+                break;
+            }
+
+            slow_ptr = cache[slow_ptr];
+            fast_ptr = cache[fast_ptr];
         }
     }
 
-    return (int)solution;
+    return solution;
 }

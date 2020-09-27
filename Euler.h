@@ -86,4 +86,6 @@ public:
     uint64_t CuboidRoute();
     uint64_t AlmostEquilateralTriangles();
     int AmicableChains();
+    uint64_t ArrangedProbability();
+    uint64_t CubeDigitPairs();
 };
