@@ -15,8 +15,6 @@ int Euler::AmicableChains()
 	}
     }
 
-    //std::cout << std::endl << "precalc done." << std::endl;
-
     for (int n = 1; n <= one_million; ++n) {
         int length = 0;
         int candidate = one_million;
@@ -32,7 +30,6 @@ int Euler::AmicableChains()
 
             if (slow_ptr == fast_ptr) {
                 while (true) {
-                    std::cout << slow_ptr << " -> ";
                     length++;
                     fast_ptr = divisors[fast_ptr];
 
@@ -44,12 +41,6 @@ int Euler::AmicableChains()
                         if (length > longest) {
                             solution = candidate;
                             longest = length;
-                            std::cout << "chicken dinner!" << std::endl;
-                            std::cout << "current solution: " << solution << std::endl;
-                            std::cout << std::endl << "current length: " << length << std::endl;
-                        }
-                        else {
-                            std::cout << "not a winner." << std::endl;
                         }
 
 			divisors[candidate] = 1;
