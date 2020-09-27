@@ -17,9 +17,10 @@ int sumProperDivisors(int n)
 
 int Euler::AmicableChains()
 {
-    int one_million = 100000;
+    int one_million = 1000000;
     int longest = 0;
     int solution = 0;
+
     std::vector<int> cache(one_million + 1, 0);
 
     for (int i = 0; i <= one_million; ++i) {
@@ -37,11 +38,6 @@ int Euler::AmicableChains()
         std::cout << n << ": ";
 
         while(true) {
-            if (fast_ptr <= 1 || slow_ptr > one_million || fast_ptr > one_million) {
-                std::cout << "no bueno." << std::endl;
-                break;
-            }
-
             fast_ptr = cache[fast_ptr];
 
             if (fast_ptr <= 1 || fast_ptr > one_million) {
@@ -84,6 +80,11 @@ int Euler::AmicableChains()
 
             slow_ptr = cache[slow_ptr];
             fast_ptr = cache[fast_ptr];
+
+            if (fast_ptr <= 1 || slow_ptr > one_million || fast_ptr > one_million) {
+                std::cout << "no bueno." << std::endl;
+                break;
+            }
         }
     }
 
