@@ -3,8 +3,7 @@
 int Euler::AmicableChains()
 {
     int one_million = 1000000;
-    int longest = 0;
-    int solution = 0;
+    int longest = 0, solution = 0;
     double root = floor(sqrt(one_million)) + 1;
 
     std::vector<int> divisors(one_million + 1, 1);
@@ -18,10 +17,9 @@ int Euler::AmicableChains()
     for (int n = 1; n <= one_million; ++n) {
         int length = 0;
         int candidate = one_million;
-        int slow_ptr = n;
-        int fast_ptr = n;
+        int slow_ptr = n, fast_ptr = n;
 
-        while(true) {
+        while(fast_ptr > 1 && slow_ptr <= one_million && fast_ptr <= one_million) {
             fast_ptr = divisors[fast_ptr];
 
             if (fast_ptr <= 1 || fast_ptr > one_million) {
@@ -56,10 +54,6 @@ int Euler::AmicableChains()
 
             slow_ptr = divisors[slow_ptr];
             fast_ptr = divisors[fast_ptr];
-
-            if (fast_ptr <= 1 || slow_ptr > one_million || fast_ptr > one_million) {
-                break;
-            }
         }
     }
 
