@@ -9,15 +9,15 @@ typedef std::array<std::array<int, 9>, 9> sudoku;
 
 bool check(sudoku bifurcation) {
     for (int i = 0; i < 9; ++i) {
-        std::unordered_set<int> horizontal_digits;
-        std::unordered_set<int> vertical_digits;
+        std::unordered_set<int> h;
+        std::unordered_set<int> v;
 
         for (int j = 0; j < 9; ++j) {
-             horizontal_digits.insert(bifurcation[i][j]);
-             vertical_digits.insert(bifurcation[j][i]);
+             h.insert(bifurcation[i][j]);
+             v.insert(bifurcation[j][i]);
         }
 
-        if (horizontal_digits.size() < 9 || vertical_digits.size() < 9) {
+        if (h.size() < 9 || v.size() < 9) {
             return false;
         }
     }
@@ -41,14 +41,24 @@ bool check(sudoku bifurcation) {
     return true;
 }
 
-void reset_hv(sudoku& puzzle, std::array<std::unordered_set<int>, 9>& horizontal_digits, std::array<std::unordered_set<int>, 9>& vertical_digits) {
+void reset_hv(sudoku& puzzle, std::array<std::unordered_set<int>, 9>& h, std::array<std::unordered_set<int>, 9>& v) {
     for (int i = 0; i < 9; ++i) {
-        horizontal_digits[i].clear();
-        vertical_digits[i].clear();
+        h[i].clear();
+        v[i].clear();
 
         for (int j = 0; j < 9; ++j) {
-             horizontal_digits[i].insert(puzzle[i][j]);
-             vertical_digits[i].insert(puzzle[j][i]);
+             h[i].insert(puzzle[i][j]);
+             v[i].insert(puzzle[j][i]);
+        }
+    }
+}
+
+void reset_subgroup(sudoku& puzzle, std::unordered_set<int>& s, int l, int k) {
+    s.clear();
+
+    for (int i = l * 3; i < (l * 3) + 3; ++i) {
+        for (int j = k * 3; j < (k * 3) + 3; ++j) {
+            s.insert(puzzle[i][j]);
         }
     }
 }
@@ -59,21 +69,17 @@ sudoku reduce(sudoku puzzle) {
     do {
         reduced = false;
 
-        std::array<std::unordered_set<int>, 9> horizontal_digits;
-        std::array<std::unordered_set<int>, 9> vertical_digits;
+        std::array<std::unordered_set<int>, 9> h;
+        std::array<std::unordered_set<int>, 9> v;
 
-	reset_hv(puzzle, horizontal_digits, vertical_digits);
+	reset_hv(puzzle, h, v);
 
         for (int l = 0; l < 3; ++l) {
             for (int k = 0; k < 3; ++k) {
                 std::unordered_set<int> missing_digits;
                 std::unordered_set<int> subgroup_digits;
 
-                for (int i = l * 3; i < (l * 3) + 3; ++i) {
-                    for (int j = k * 3; j < (k * 3) + 3; ++j) {
-                        subgroup_digits.insert(puzzle[i][j]);
-                    }
-                }
+		reset_subgroup(puzzle, subgroup_digits, l, k);
 
                 for (int i = 1; i <= 9; ++i) {
                     if (subgroup_digits.find(i) == subgroup_digits.end()) {
@@ -82,92 +88,71 @@ sudoku reduce(sudoku puzzle) {
                 }
 
 
-                if (missing_digits.size() > 0) {
-                    for (int i = l * 3; i < (l * 3) + 3; ++i) {
-                        for (int j = k * 3; j < (k * 3) + 3; ++j) {
-                            if (puzzle[i][j] <= 0) {
-                                if (missing_digits.size() == 1) {
-                                    puzzle[i][j] = *missing_digits.begin();
-                                    reduced = true;
-                                    vert = true;
-                                    std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << *missing_digits.begin() << std::endl;
+                for (int i = l * 3; i < (l * 3) + 3; ++i) {
+                    for (int j = k * 3; j < (k * 3) + 3; ++j) {
+                        if (puzzle[i][j] <= 0) {
+                            if (missing_digits.size() == 1) {
+                                puzzle[i][j] = *missing_digits.begin();
+                                reduced = true;
+                                vert = true;
+                                std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << *missing_digits.begin() << std::endl;
 
-	                            reset_hv(puzzle, horizontal_digits, vertical_digits);
+	                        reset_hv(puzzle, h, v);
+		                reset_subgroup(puzzle, subgroup_digits, l, k);
 
-                                    subgroup_digits.clear();
-                                    for (int q = l * 3; q < (l * 3) + 3; ++q) {
-                                        for (int p = k * 3; p < (k * 3) + 3; ++p) {
-                                            subgroup_digits.insert(puzzle[q][p]);
-                                        }
-                                    }
+                                break;
+                            }
 
-                                    break;
+                            std::unordered_set<int> matches;
+
+                            for (int x : missing_digits) {
+                                if (h[i].find(x) != h[i].end()) {
+                                    matches.insert(x);
                                 }
 
-                                std::unordered_set<int> matches;
-
-                                for (int x : missing_digits) {
-                                    if (horizontal_digits[i].find(x) != horizontal_digits[i].end()) {
-                                        matches.insert(x);
-                                    }
-
-                                    if (vertical_digits[j].find(x) != vertical_digits[j].end()) {
-                                        matches.insert(x);
-                                    }
+                                if (v[j].find(x) != v[j].end()) {
+                                    matches.insert(x);
                                 }
+                            }
 
-                                std::unordered_set<int> match_matches;
+                            std::unordered_set<int> match_matches;
 
-                                for (int x : missing_digits) {
-                                    if (matches.find(x) == matches.end()) {
-                                        match_matches.insert(x);
-                                    }
+                            for (int x : missing_digits) {
+                                if (matches.find(x) == matches.end()) {
+                                    match_matches.insert(x);
                                 }
+                            }
 
-                                if (match_matches.size() == 1) {
-                                    puzzle[i][j] = *match_matches.begin();
-                                    reduced = true;
-                                    vert = true;
-                                    std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << *match_matches.begin() << std::endl;
+                            if (match_matches.size() == 1) {
+                                puzzle[i][j] = *match_matches.begin();
+                                reduced = true;
+                                vert = true;
+                                std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << *match_matches.begin() << std::endl;
 
-	                            reset_hv(puzzle, horizontal_digits, vertical_digits);
+	                        reset_hv(puzzle, h, v);
+		                reset_subgroup(puzzle, subgroup_digits, l, k);
 
-                                    subgroup_digits.clear();
-                                    for (int q = l * 3; q < (l * 3) + 3; ++q) {
-                                        for (int p = k * 3; p < (k * 3) + 3; ++p) {
-                                            subgroup_digits.insert(puzzle[q][p]);
-                                        }
-                                    }
+                                break;
+                            }
+                            for (int x : missing_digits) {
+                                if (subgroup_digits.find(x) == subgroup_digits.end()) {
+                                    if (((puzzle[(l * 3) + ((i + 1) % 3)][j] > 0 && !vert)
+                                    || h[(l * 3) + ((i + 1) % 3)].find(x) != h[(l * 3) + ((i + 1) % 3)].end())
+                                    && ((puzzle[(l * 3) + ((i + 2) % 3)][j] > 0 && !vert)
+                                    || h[(l * 3) + ((i + 2) % 3)].find(x) != h[(l * 3) + ((i + 2) % 3)].end())
+                                    && ((puzzle[i][(k * 3) + ((j + 1) % 3)] > 0 && vert)
+                                    || v[(k * 3) + ((j + 1) % 3)].find(x) != v[(k * 3) + ((j + 1) % 3)].end())
+                                    && ((puzzle[i][(k * 3) + ((j + 2) % 3)] > 0 && vert)
+                                    || v[(k * 3) + ((j + 2) % 3)].find(x) != v[(k * 3) + ((j + 2) % 3)].end())) {
+                                        puzzle[i][j] = x;
+                                        reduced = true;
+                                        vert = true;
+                                        std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << x << std::endl;
 
-                                    break;
-                                }
-                                for (int x : missing_digits) {
-                                    if (subgroup_digits.find(x) == subgroup_digits.end()) {
-                                        if (((puzzle[(l * 3) + ((i + 1) % 3)][j] > 0 && !vert)
-                                        || horizontal_digits[(l * 3) + ((i + 1) % 3)].find(x) != horizontal_digits[(l * 3) + ((i + 1) % 3)].end())
-                                        && ((puzzle[(l * 3) + ((i + 2) % 3)][j] > 0 && !vert)
-                                        || horizontal_digits[(l * 3) + ((i + 2) % 3)].find(x) != horizontal_digits[(l * 3) + ((i + 2) % 3)].end())
-                                        && ((puzzle[i][(k * 3) + ((j + 1) % 3)] > 0 && vert)
-                                        || vertical_digits[(k * 3) + ((j + 1) % 3)].find(x) != vertical_digits[(k * 3) + ((j + 1) % 3)].end())
-                                        && ((puzzle[i][(k * 3) + ((j + 2) % 3)] > 0 && vert)
-                                        || vertical_digits[(k * 3) + ((j + 2) % 3)].find(x) != vertical_digits[(k * 3) + ((j + 2) % 3)].end())) {
-                                            puzzle[i][j] = x;
-                                            reduced = true;
-                                            vert = true;
-                                            std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << x << std::endl;
+	                                reset_hv(puzzle, h, v);
+		                        reset_subgroup(puzzle, subgroup_digits, l, k);
 
-	                                    reset_hv(puzzle, horizontal_digits, vertical_digits);
-
-                                            subgroup_digits.clear();
-
-                                            for (int q = l * 3; q < (l * 3) + 3; ++q) {
-                                                for (int p = k * 3; p < (k * 3) + 3; ++p) {
-                                                    subgroup_digits.insert(puzzle[q][p]);
-                                                }
-                                            }
-
-                                            break;
-                                        }
+                                        break;
                                     }
                                 }
                             }
