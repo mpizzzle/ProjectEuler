@@ -70,35 +70,34 @@ void reset_subgroup(sudoku& puzzle, set& s, set& m, int l, int k) {
     }
 }
 
-void found(sudoku& puzzle, int x, int i, int j, int k, int l, bool r, bool vert, std::array<set, 9>& h, std::array<set, 9>& v, set& s, set& m) {
+void found(sudoku& puzzle, int x, int i, int j, int k, int l, bool r, std::array<set, 9>& h, std::array<set, 9>& v, set& s, set& m) {
     puzzle[i][j] = x;
     r = true;
-    vert = true;
     std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << x << std::endl;
-    
+
     reset_hv(puzzle, h, v);
     reset_subgroup(puzzle, s, m, l, k);
 }
 
 sudoku reduce(sudoku puzzle) {
-    bool reduced, vert = true;
+    bool reduced;
     do {
         reduced = false;
 
         std::array<set, 9> h, v;
 
-	reset_hv(puzzle, h, v);
+        reset_hv(puzzle, h, v);
 
         for (int l = 0; l < 3; ++l) {
             for (int k = 0; k < 3; ++k) {
                 set missing, subgroup;
-		reset_subgroup(puzzle, subgroup, missing, l, k);
+                reset_subgroup(puzzle, subgroup, missing, l, k);
 
                 for (int i = l * 3; i < (l * 3) + 3; ++i) {
                     for (int j = k * 3; j < (k * 3) + 3; ++j) {
                         if (puzzle[i][j] <= 0) {
                             if (missing.size() == 1) {
-                                found(puzzle, *missing.begin(), i, j, k, l, reduced, vert, h, v, subgroup, missing);
+                                found(puzzle, *missing.begin(), i, j, k, l, reduced, h, v, subgroup, missing);
                                 break;
                             }
 
@@ -111,21 +110,24 @@ sudoku reduce(sudoku puzzle) {
                             }
 
                             if (matches.size() == 1) {
-                                found(puzzle, *matches.begin(), i, j, k, l, reduced, vert, h, v, subgroup, missing);
+                                found(puzzle, *matches.begin(), i, j, k, l, reduced, h, v, subgroup, missing);
                                 break;
                             }
 
                             for (int x : missing) {
                                 if (subgroup.find(x) == subgroup.end()) {
-                                    if (((puzzle[(l * 3) + ((i + 1) % 3)][j] > 0 && !vert)
-                                    || h[(l * 3) + ((i + 1) % 3)].find(x) != h[(l * 3) + ((i + 1) % 3)].end())
-                                    && ((puzzle[(l * 3) + ((i + 2) % 3)][j] > 0 && !vert)
-                                    || h[(l * 3) + ((i + 2) % 3)].find(x) != h[(l * 3) + ((i + 2) % 3)].end())
-                                    && ((puzzle[i][(k * 3) + ((j + 1) % 3)] > 0 && vert)
-                                    || v[(k * 3) + ((j + 1) % 3)].find(x) != v[(k * 3) + ((j + 1) % 3)].end())
-                                    && ((puzzle[i][(k * 3) + ((j + 2) % 3)] > 0 && vert)
-                                    || v[(k * 3) + ((j + 2) % 3)].find(x) != v[(k * 3) + ((j + 2) % 3)].end())) {
-                                        found(puzzle, x, i, j, k, l, reduced, vert, h, v, subgroup, missing);
+                                    int li1 = (l * 3) + ((i + 1) % 3), li2 = (l * 3) + ((i + 2) % 3),
+                                        kj1 = (k * 3) + ((j + 1) % 3), kj2 = (k * 3) + ((j + 2) % 3);
+
+                                    if (((h[li1].find(x) != h[li1].end())
+                                      && (h[li2].find(x) != h[li2].end())
+                                      && ((puzzle[i][kj1] > 0) || v[kj1].find(x) != v[kj1].end())
+                                      && ((puzzle[i][kj2] > 0) || v[kj2].find(x) != v[kj2].end())) || (
+                                         (v[kj1].find(x) != v[kj1].end())
+                                      && (v[kj2].find(x) != v[kj2].end())
+                                      && ((puzzle[li1][j] > 0) || h[li1].find(x) != h[li1].end())
+                                      && ((puzzle[li2][j] > 0) || h[li2].find(x) != h[li2].end()))) {
+                                        found(puzzle, x, i, j, k, l, reduced, h, v, subgroup, missing);
                                         break;
                                     }
                                 }
@@ -135,12 +137,6 @@ sudoku reduce(sudoku puzzle) {
                 }
             }
         }
-
-        if (!reduced && vert) {
-            vert = false;
-            reduced = true;
-        }
-
     } while (reduced);
 
     return puzzle;
