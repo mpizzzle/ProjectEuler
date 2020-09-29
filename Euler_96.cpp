@@ -6,11 +6,11 @@
 #include "Euler.h"
 
 typedef std::array<std::array<int, 9>, 9> sudoku;
+typedef std::unordered_set<int> set;
 
 bool check(sudoku bifurcation) {
     for (int i = 0; i < 9; ++i) {
-        std::unordered_set<int> h;
-        std::unordered_set<int> v;
+        set h, v;
 
         for (int j = 0; j < 9; ++j) {
              h.insert(bifurcation[i][j]);
@@ -24,15 +24,15 @@ bool check(sudoku bifurcation) {
 
     for (int l = 0; l < 3; ++l) {
         for (int k = 0; k < 3; ++k) {
-            std::unordered_set<int> subgroup_digits;
+            set subgroup;
 
             for (int i = l * 3; i < (l * 3) + 3; ++i) {
                 for (int j = k * 3; j < (k * 3) + 3; ++j) {
-                    subgroup_digits.insert(bifurcation[i][j]);
+                    subgroup.insert(bifurcation[i][j]);
                 }
             }
 
-            if (subgroup_digits.size() < 9) {
+            if (subgroup.size() < 9) {
                 return false;
             }
         }
@@ -41,7 +41,7 @@ bool check(sudoku bifurcation) {
     return true;
 }
 
-void reset_hv(sudoku& puzzle, std::array<std::unordered_set<int>, 9>& h, std::array<std::unordered_set<int>, 9>& v) {
+void reset_hv(sudoku& puzzle, std::array<set, 9>& h, std::array<set, 9>& v) {
     for (int i = 0; i < 9; ++i) {
         h[i].clear();
         v[i].clear();
@@ -53,89 +53,59 @@ void reset_hv(sudoku& puzzle, std::array<std::unordered_set<int>, 9>& h, std::ar
     }
 }
 
-void reset_subgroup(sudoku& puzzle, std::unordered_set<int>& s, int l, int k) {
+void reset_subgroup(sudoku& puzzle, set& s, set& m, int l, int k) {
     s.clear();
+    m.clear();
 
     for (int i = l * 3; i < (l * 3) + 3; ++i) {
         for (int j = k * 3; j < (k * 3) + 3; ++j) {
             s.insert(puzzle[i][j]);
         }
     }
+
+    for (int i = 1; i <= 9; ++i) {
+        if (s.find(i) == s.end()) {
+            m.insert(i);
+        }
+    }
+}
+
+void found(sudoku& puzzle, int x, int i, int j, int k, int l, bool r, bool vert, std::array<set, 9>& h, std::array<set, 9>& v, set& s, set& m) {
+    puzzle[i][j] = x;
+    r = true;
+    vert = true;
+    std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << x << std::endl;
+    
+    reset_hv(puzzle, h, v);
+    reset_subgroup(puzzle, s, m, l, k);
 }
 
 sudoku reduce(sudoku puzzle) {
-    bool reduced;
-    bool vert = true;
+    bool reduced, vert = true;
     do {
         reduced = false;
 
-        std::array<std::unordered_set<int>, 9> h;
-        std::array<std::unordered_set<int>, 9> v;
+        std::array<set, 9> h, v;
 
 	reset_hv(puzzle, h, v);
 
         for (int l = 0; l < 3; ++l) {
             for (int k = 0; k < 3; ++k) {
-                std::unordered_set<int> missing_digits;
-                std::unordered_set<int> subgroup_digits;
-
-		reset_subgroup(puzzle, subgroup_digits, l, k);
-
-                for (int i = 1; i <= 9; ++i) {
-                    if (subgroup_digits.find(i) == subgroup_digits.end()) {
-                        missing_digits.insert(i);
-                    }
-                }
-
+                set missing, subgroup;
+		reset_subgroup(puzzle, subgroup, missing, l, k);
 
                 for (int i = l * 3; i < (l * 3) + 3; ++i) {
                     for (int j = k * 3; j < (k * 3) + 3; ++j) {
                         if (puzzle[i][j] <= 0) {
-                            if (missing_digits.size() == 1) {
-                                puzzle[i][j] = *missing_digits.begin();
-                                reduced = true;
-                                vert = true;
-                                std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << *missing_digits.begin() << std::endl;
-
-	                        reset_hv(puzzle, h, v);
-		                reset_subgroup(puzzle, subgroup_digits, l, k);
-
+                            if (missing.size() == 1) {
+                                found(puzzle, *missing.begin(), i, j, k, l, reduced, vert, h, v, subgroup, missing);
                                 break;
                             }
 
-                            std::unordered_set<int> matches;
+                            set matches;
 
-                            for (int x : missing_digits) {
-                                if (h[i].find(x) != h[i].end()) {
-                                    matches.insert(x);
-                                }
-
-                                if (v[j].find(x) != v[j].end()) {
-                                    matches.insert(x);
-                                }
-                            }
-
-                            std::unordered_set<int> match_matches;
-
-                            for (int x : missing_digits) {
-                                if (matches.find(x) == matches.end()) {
-                                    match_matches.insert(x);
-                                }
-                            }
-
-                            if (match_matches.size() == 1) {
-                                puzzle[i][j] = *match_matches.begin();
-                                reduced = true;
-                                vert = true;
-                                std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << *match_matches.begin() << std::endl;
-
-	                        reset_hv(puzzle, h, v);
-		                reset_subgroup(puzzle, subgroup_digits, l, k);
-
-                                break;
-                            }
-                            for (int x : missing_digits) {
-                                if (subgroup_digits.find(x) == subgroup_digits.end()) {
+                            for (int x : missing) {
+                                if (subgroup.find(x) == subgroup.end()) {
                                     if (((puzzle[(l * 3) + ((i + 1) % 3)][j] > 0 && !vert)
                                     || h[(l * 3) + ((i + 1) % 3)].find(x) != h[(l * 3) + ((i + 1) % 3)].end())
                                     && ((puzzle[(l * 3) + ((i + 2) % 3)][j] > 0 && !vert)
@@ -144,17 +114,27 @@ sudoku reduce(sudoku puzzle) {
                                     || v[(k * 3) + ((j + 1) % 3)].find(x) != v[(k * 3) + ((j + 1) % 3)].end())
                                     && ((puzzle[i][(k * 3) + ((j + 2) % 3)] > 0 && vert)
                                     || v[(k * 3) + ((j + 2) % 3)].find(x) != v[(k * 3) + ((j + 2) % 3)].end())) {
-                                        puzzle[i][j] = x;
-                                        reduced = true;
-                                        vert = true;
-                                        std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << x << std::endl;
-
-	                                reset_hv(puzzle, h, v);
-		                        reset_subgroup(puzzle, subgroup_digits, l, k);
-
+                                        found(puzzle, x, i, j, k, l, reduced, vert, h, v, subgroup, missing);
                                         break;
                                     }
                                 }
+
+                                if (h[i].find(x) != h[i].end() || v[j].find(x) != v[j].end()) {
+                                    matches.insert(x);
+                                }
+                            }
+
+                            set left_join;
+
+                            for (int x : missing) {
+                                if (matches.find(x) == matches.end()) {
+                                    left_join.insert(x);
+                                }
+                            }
+
+                            if (left_join.size() == 1) {
+                                found(puzzle, *left_join.begin(), i, j, k, l, reduced, vert, h, v, subgroup, missing);
+                                break;
                             }
                         }
                     }
@@ -209,6 +189,7 @@ void print(sudoku puzzle) {
     }
     std::cout << "-------------------" << std::endl << std::endl;
 }
+
 int Euler::Sudoku()
 {
     std::array<sudoku, 50> sudokus;
