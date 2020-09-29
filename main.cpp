@@ -92,7 +92,8 @@ int main() {
     //std::cout << "problem 87: " << e.PrimePowerTriples() << std::endl;
     //std::cout << "problem 90: " << e.CubeDigitPairs() << std::endl; //in progress
     //std::cout << "problem 94: " << e.AlmostEquilateralTriangles() << std::endl; //in progress
-    std::cout << "problem 95: " << e.AmicableChains() << std::endl; //in progress
+    //std::cout << "problem 95: " << e.AmicableChains() << std::endl;
+    std::cout << "problem 96: " << e.Sudoku() << std::endl; //in progress
     //std::cout << "problem 100: " << e.ArrangedProbability() << std::endl; //in progress
 
     std::cout << "duration: " << 1000.0 * (std::clock() - start) / CLOCKS_PER_SEC << "ms" << std::endl;
