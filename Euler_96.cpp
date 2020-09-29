@@ -8,7 +8,7 @@
 typedef std::array<std::array<int, 9>, 9> sudoku;
 typedef std::unordered_set<int> set;
 
-bool check(sudoku bifurcation) {
+bool check(sudoku& bifurcation) {
     for (int i = 0; i < 9; ++i) {
         set h, v;
 
@@ -105,6 +105,17 @@ sudoku reduce(sudoku puzzle) {
                             set matches;
 
                             for (int x : missing) {
+                                if (h[i].find(x) == h[i].end() && v[j].find(x) == v[j].end()) {
+                                    matches.insert(x);
+                                }
+                            }
+
+                            if (matches.size() == 1) {
+                                found(puzzle, *matches.begin(), i, j, k, l, reduced, vert, h, v, subgroup, missing);
+                                break;
+                            }
+
+                            for (int x : missing) {
                                 if (subgroup.find(x) == subgroup.end()) {
                                     if (((puzzle[(l * 3) + ((i + 1) % 3)][j] > 0 && !vert)
                                     || h[(l * 3) + ((i + 1) % 3)].find(x) != h[(l * 3) + ((i + 1) % 3)].end())
@@ -118,23 +129,6 @@ sudoku reduce(sudoku puzzle) {
                                         break;
                                     }
                                 }
-
-                                if (h[i].find(x) != h[i].end() || v[j].find(x) != v[j].end()) {
-                                    matches.insert(x);
-                                }
-                            }
-
-                            set left_join;
-
-                            for (int x : missing) {
-                                if (matches.find(x) == matches.end()) {
-                                    left_join.insert(x);
-                                }
-                            }
-
-                            if (left_join.size() == 1) {
-                                found(puzzle, *left_join.begin(), i, j, k, l, reduced, vert, h, v, subgroup, missing);
-                                break;
                             }
                         }
                     }
@@ -213,7 +207,7 @@ int Euler::Sudoku()
 
     file.close();
 
-    for (int j = 0; j < 50; ++j) {
+    for (int j = 0; j < 5; ++j) {
         std::cout << "next puzzle " << j << ":" << std::endl;
         sudoku puzzle = sudokus[j];
         print(puzzle);
