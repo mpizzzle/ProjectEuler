@@ -43,8 +43,7 @@ bool check(sudoku& bifurcation) {
 
 void reset_hv(sudoku& puzzle, std::array<set, 9>& h, std::array<set, 9>& v) {
     for (int i = 0; i < 9; ++i) {
-        h[i].clear();
-        v[i].clear();
+        h[i].clear(); v[i].clear();
 
         for (int j = 0; j < 9; ++j) {
              h[i].insert(puzzle[i][j]);
@@ -53,33 +52,31 @@ void reset_hv(sudoku& puzzle, std::array<set, 9>& h, std::array<set, 9>& v) {
     }
 }
 
-void reset_subgroup(sudoku& puzzle, set& s, set& m, int l, int k) {
-    s.clear();
-    m.clear();
+void reset_subgroup(sudoku& puzzle, set& subgroup, set& missing, int l, int k) {
+    subgroup.clear(); missing.clear();
 
     for (int i = l * 3; i < (l * 3) + 3; ++i) {
         for (int j = k * 3; j < (k * 3) + 3; ++j) {
-            s.insert(puzzle[i][j]);
+            subgroup.insert(puzzle[i][j]);
         }
     }
 
     for (int i = 1; i <= 9; ++i) {
-        if (s.find(i) == s.end()) {
-            m.insert(i);
+        if (subgroup.find(i) == subgroup.end()) {
+            missing.insert(i);
         }
     }
 }
 
-void found(sudoku& puzzle, int x, int i, int j, int k, int l, bool r, std::array<set, 9>& h, std::array<set, 9>& v, set& s, set& m) {
+void found(sudoku& puzzle, int x, int i, int j, int k, int l, bool& r, std::array<set, 9>& h, std::array<set, 9>& v, set& s, set& m) {
     puzzle[i][j] = x;
     r = true;
-    std::cout << "reduced i: " << i + 1 << ", j: " << j + 1 << " = " << x << std::endl;
 
     reset_hv(puzzle, h, v);
     reset_subgroup(puzzle, s, m, l, k);
 }
 
-sudoku reduce(sudoku puzzle) {
+sudoku reduce(sudoku& puzzle) {
     bool reduced;
     do {
         reduced = false;
@@ -98,7 +95,7 @@ sudoku reduce(sudoku puzzle) {
                         if (puzzle[i][j] <= 0) {
                             if (missing.size() == 1) {
                                 found(puzzle, *missing.begin(), i, j, k, l, reduced, h, v, subgroup, missing);
-                                break;
+                                continue;
                             }
 
                             set matches;
@@ -111,7 +108,7 @@ sudoku reduce(sudoku puzzle) {
 
                             if (matches.size() == 1) {
                                 found(puzzle, *matches.begin(), i, j, k, l, reduced, h, v, subgroup, missing);
-                                break;
+                                continue;
                             }
 
                             for (int x : missing) {
@@ -144,15 +141,26 @@ sudoku reduce(sudoku puzzle) {
 
 sudoku bifurcate(sudoku bifurcation) {
     if (!check(bifurcation)) {
-        sudoku blep = {};
-        return blep;
+        return {};
     }
 
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
             if (bifurcation[i][j] <= 0) {
-                for (int k = 0; k < 9; ++k) {
-                    bifurcation[i][j] = k + 1;
+                for (int k = 1; k <= 9; ++k) {
+                    bifurcation[i][j] = k;
+
+                    sudoku candidate = bifurcate(bifurcation);
+
+                    if (check(candidate)) {
+                        return candidate;
+                    }
+                }
+            }
+
+            if (bifurcation[8 - i][8 - j] <= 0) {
+                for (int k = 9; k > 0; --k) {
+                    bifurcation[8 - i][8 - j] = k;
 
                     sudoku candidate = bifurcate(bifurcation);
 
@@ -168,12 +176,12 @@ sudoku bifurcate(sudoku bifurcation) {
 }
 
 void print(sudoku puzzle) {
-    for (int k = 0; k < 9; ++k) {
-        if (k % 3 == 0) {
+    for (int i = 0; i < 9; ++i) {
+        if (i % 3 == 0) {
             std::cout << "-------------------" << std::endl;
         }
-        for (int l = 0; l < 9; ++l) {
-            std::cout << ((l % 3 == 0) ? "|" : " ") << ((puzzle[k][l] < 0) ? 0 : puzzle[k][l]);
+        for (int j = 0; j < 9; ++j) {
+            std::cout << ((j % 3 == 0) ? "|" : " ") << ((puzzle[i][j] < 0) ? 0 : puzzle[i][j]);
         }
         std::cout << "|" << std::endl;
     }
@@ -203,9 +211,9 @@ int Euler::Sudoku()
 
     file.close();
 
-    for (int j = 0; j < 5; ++j) {
-        std::cout << "next puzzle " << j << ":" << std::endl;
+    for (int j = 0; j < 50; ++j) {
         sudoku puzzle = sudokus[j];
+        std::cout << "next puzzle " << j << ":" << std::endl;
         print(puzzle);
         sudoku reduced = reduce(puzzle);
         std::cout << "reduced:" << std::endl;
