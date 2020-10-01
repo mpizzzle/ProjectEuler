@@ -104,14 +104,7 @@ sudoku reduce(sudoku& puzzle) {
                                 if (h[i].find(x) == h[i].end() && v[j].find(x) == v[j].end()) {
                                     matches.insert(x);
                                 }
-                            }
 
-                            if (matches.size() == 1) {
-                                found(puzzle, *matches.begin(), i, j, k, l, reduced, h, v, subgroup, missing);
-                                continue;
-                            }
-
-                            for (int x : missing) {
                                 if (subgroup.find(x) == subgroup.end()) {
                                     int li1 = (l * 3) + ((i + 1) % 3), li2 = (l * 3) + ((i + 2) % 3),
                                         kj1 = (k * 3) + ((j + 1) % 3), kj2 = (k * 3) + ((j + 2) % 3);
@@ -126,6 +119,11 @@ sudoku reduce(sudoku& puzzle) {
                                         break;
                                     }
                                 }
+                            }
+
+                            if (matches.size() == 1) {
+                                found(puzzle, *matches.begin(), i, j, k, l, reduced, h, v, subgroup, missing);
+                                continue;
                             }
                         }
                     }
@@ -198,7 +196,7 @@ int Euler::Sudoku()
 
     file.close();
 
-    for (int j = 0; j < 50; ++j) {
+    for (int j = 0; j < 5; ++j) {
         sudoku puzzle = sudokus[j];
         std::cout << "next puzzle " << j << ":" << std::endl;
         print(puzzle);
