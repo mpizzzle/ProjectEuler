@@ -116,12 +116,10 @@ sudoku reduce(sudoku& puzzle) {
                                     int li1 = (l * 3) + ((i + 1) % 3), li2 = (l * 3) + ((i + 2) % 3),
                                         kj1 = (k * 3) + ((j + 1) % 3), kj2 = (k * 3) + ((j + 2) % 3);
 
-                                    if (((h[li1].find(x) != h[li1].end())
-                                      && (h[li2].find(x) != h[li2].end())
+                                    if (((h[li1].find(x) != h[li1].end()) && (h[li2].find(x) != h[li2].end())
                                       && ((puzzle[i][kj1] > 0) || v[kj1].find(x) != v[kj1].end())
                                       && ((puzzle[i][kj2] > 0) || v[kj2].find(x) != v[kj2].end())) || (
-                                         (v[kj1].find(x) != v[kj1].end())
-                                      && (v[kj2].find(x) != v[kj2].end())
+                                         (v[kj1].find(x) != v[kj1].end()) && (v[kj2].find(x) != v[kj2].end())
                                       && ((puzzle[li1][j] > 0) || h[li1].find(x) != h[li1].end())
                                       && ((puzzle[li2][j] > 0) || h[li2].find(x) != h[li2].end()))) {
                                         found(puzzle, x, i, j, k, l, reduced, h, v, subgroup, missing);
@@ -139,6 +137,7 @@ sudoku reduce(sudoku& puzzle) {
     return puzzle;
 }
 
+//need to modify bifurcation to start with lowest branching factor rather than sequentially.
 sudoku bifurcate(sudoku bifurcation) {
     if (!check(bifurcation)) {
         return {};
@@ -149,18 +148,6 @@ sudoku bifurcate(sudoku bifurcation) {
             if (bifurcation[i][j] <= 0) {
                 for (int k = 1; k <= 9; ++k) {
                     bifurcation[i][j] = k;
-
-                    sudoku candidate = bifurcate(bifurcation);
-
-                    if (check(candidate)) {
-                        return candidate;
-                    }
-                }
-            }
-
-            if (bifurcation[8 - i][8 - j] <= 0) {
-                for (int k = 9; k > 0; --k) {
-                    bifurcation[8 - i][8 - j] = k;
 
                     sudoku candidate = bifurcate(bifurcation);
 
