@@ -89,4 +89,5 @@ public:
     uint64_t ArrangedProbability();
     uint64_t CubeDigitPairs();
     int Sudoku();
+    int AnagramicSquares();
 };
