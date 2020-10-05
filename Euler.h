@@ -90,4 +90,5 @@ public:
     uint64_t CubeDigitPairs();
     int Sudoku();
     int AnagramicSquares();
+    int ArithmeticExpressions();
 };

@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 int anagrams_match(std::vector<std::string>& anagram_pair, std::vector<std::string>& anagram_squares) {
-    int solution = 0;
+    int solution = -1;
 
     for (uint64_t i = 0; i < anagram_squares.size(); ++i) {
         std::unordered_map<char, char> char_map;
@@ -83,7 +83,7 @@ int Euler::AnagramicSquares() {
 
     file.close();
 
-    for (int i = 0; i < sqrt(1000000000); ++i) {
+    for (int i = 0; i < sqrt(1e9); ++i) {
         squares.push_back(std::to_string(i * i));
     }
 
